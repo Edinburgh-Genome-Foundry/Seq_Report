@@ -6,7 +6,7 @@ data_dir = os.path.join("tests", "data")
 seq_fasta = os.path.join(data_dir, "test.fa")
 
 
-def test_SeqCollection(tmpdir):
+def test_SeqCollection():
     seq_records = seqreport.read_fasta(seq_fasta)
     seq_coll = seqreport.SeqCollection(
         records=seq_records,
@@ -17,3 +17,9 @@ def test_SeqCollection(tmpdir):
     assert seq_coll.n_bp == 99
     assert seq_coll.projectname == "EGF24"
     assert seq_coll != ""
+
+
+def test_seqcollection_from_csv():
+    csv_path = os.path.join(data_dir, "values.csv")
+    seqreport.seqcollection_from_csv(csv_file=csv_path)
+    # (not tested passing records or param_dict above)

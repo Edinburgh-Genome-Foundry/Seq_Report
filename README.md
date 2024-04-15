@@ -30,6 +30,14 @@ seqreport.write_pdf_report("seq_report.pdf", seq_coll)
 <img alt="Seq Report" title="Seq Report" src="images/seqreport_screenshot.png" width="360">
 </p>
 
+Alternatively, use a CSV file to specify parameters:
+
+```python
+seq_coll = seqreport.seqcollection_from_csv(csv_file="tests/data/values.csv")
+```
+
+Header is ignored, but there must be a header. Entries must match the SeqCollection parameters ([example](tests/data/values.csv)).
+
 ## Versioning
 
 Seq Report uses the [semantic versioning](https://semver.org) scheme.

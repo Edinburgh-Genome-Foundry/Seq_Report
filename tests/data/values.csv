@@ -1,0 +1,7 @@
+Entry,Value
+fasta,tests/data/test.fa
+cost_per_base,0.3
+cost_per_seq,10
+currency_symbol,$
+projectname,
+comments,"A comment, and some more"
