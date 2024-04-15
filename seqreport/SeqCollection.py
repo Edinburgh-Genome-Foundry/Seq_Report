@@ -18,9 +18,19 @@ class SeqCollection:
 
     **currency_symbol**
     > The currency symbol to display in the report.
+
+    **projectname**
+    > The name of the project (`str`).
     """
 
-    def __init__(self, fasta, cost_per_base=0.25, cost_per_seq=0, currency_symbol="£"):
+    def __init__(
+        self,
+        fasta,
+        cost_per_base=0.25,
+        cost_per_seq=0,
+        currency_symbol="£",
+        projectname="",
+    ):
         self.fasta = fasta
         self.cost_per_base = cost_per_base
         self.cost_per_seq = cost_per_seq
@@ -34,3 +44,4 @@ class SeqCollection:
             n_bp += len(part.seq)
         self.n_bp = n_bp
         self.cost = self.n_seq * self.cost_per_seq + self.n_bp * self.cost_per_base
+        self.projectname = projectname
