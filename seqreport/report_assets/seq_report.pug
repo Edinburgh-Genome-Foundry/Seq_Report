@@ -10,7 +10,7 @@ hr
 p.
   This document reports basic sequence statistics.
 
-if seqcollection.projectname 
+if seqcollection.projectname
   p.
     Projectname: <b>{{ seqcollection.projectname }}</b>
 
@@ -21,6 +21,9 @@ p.
 p.
   Estimated cost: <b>{{ seqcollection.currency_symbol }} {{ seqcollection.cost }}</b>
 
+if seqcollection.comments
+  p.
+    Comments: <i>{{ seqcollection.comments }}</i>
 
 div(style="margin-top:1cm; margin-bottom:1cm;")
 

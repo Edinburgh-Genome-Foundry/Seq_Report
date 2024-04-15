@@ -21,6 +21,9 @@ class SeqCollection:
 
     **projectname**
     > The name of the project (`str`).
+
+    **comments**
+    > Any comments to be included in the report (`str`).
     """
 
     def __init__(
@@ -30,6 +33,7 @@ class SeqCollection:
         cost_per_seq=0,
         currency_symbol="£",
         projectname="",
+        comments="",
     ):
         self.fasta = fasta
         self.cost_per_base = cost_per_base
@@ -45,3 +49,4 @@ class SeqCollection:
         self.n_bp = n_bp
         self.cost = self.n_seq * self.cost_per_seq + self.n_bp * self.cost_per_base
         self.projectname = projectname
+        self.comments = comments
