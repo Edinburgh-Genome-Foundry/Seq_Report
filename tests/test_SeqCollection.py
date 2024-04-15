@@ -19,6 +19,11 @@ def test_SeqCollection():
     assert seq_coll != ""
 
 
+def test_read_fasta():
+    seq_records = seqreport.read_fasta(seq_fasta)
+    assert len(seq_records) == 3
+
+
 def test_seqcollection_from_csv():
     csv_path = os.path.join(data_dir, "values.csv")
     seqreport.seqcollection_from_csv(csv_file=csv_path)
