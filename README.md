@@ -22,7 +22,7 @@ pip install git+https://github.com/Edinburgh-Genome-Foundry/Seq_Report.git
 import seqreport
 
 seq_fasta = "seq.fa"
-seq_coll = seqreport.SeqCollection(fasta=seq_fasta, projectname="EGF24")
+seq_coll = seqreport.SeqCollection(records=seqreport.read_fasta(seq_fasta), projectname="EGF24")
 seqreport.write_pdf_report("seq_report.pdf", seq_coll)
 ```
 

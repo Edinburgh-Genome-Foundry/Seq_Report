@@ -15,5 +15,5 @@ setup(
     keywords="biology dna",
     packages=find_packages(exclude="docs"),
     include_package_data=True,
-    install_requires=["pdf_reports", "dnacauldron"],
+    install_requires=["pdf_reports", "biopython"],
 )

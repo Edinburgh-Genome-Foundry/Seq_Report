@@ -1,4 +1,4 @@
-import dnacauldron
+from Bio import SeqIO
 
 
 class SeqCollection:
@@ -7,8 +7,8 @@ class SeqCollection:
 
     **Parameters**
 
-    **fasta**
-    > The FASTA file of the sequences.
+    **records**
+    > A list of Biopython SeqRecords.
 
     **cost_per_base**
     > Cost per nucleotide base.
@@ -28,20 +28,17 @@ class SeqCollection:
 
     def __init__(
         self,
-        fasta,
+        records,
         cost_per_base=0.25,
         cost_per_seq=0,
         currency_symbol="£",
         projectname="",
         comments="",
     ):
-        self.fasta = fasta
+        self.sequences = records
         self.cost_per_base = cost_per_base
         self.cost_per_seq = cost_per_seq
         self.currency_symbol = currency_symbol
-        self.sequences = dnacauldron.biotools.load_records_from_files(
-            files=[self.fasta], use_file_names_as_ids=False
-        )
         self.n_seq = len(self.sequences)
         n_bp = 0
         for part in self.sequences:
@@ -50,3 +47,15 @@ class SeqCollection:
         self.cost = self.n_seq * self.cost_per_seq + self.n_bp * self.cost_per_base
         self.projectname = projectname
         self.comments = comments
+
+
+def read_fasta(fasta):
+    """Read a FASTA sequence file into a list of records.
+
+
+    **Parameters**
+
+    **fasta**
+    > The FASTA filepath (`str`).
+    """
+    return list(SeqIO.parse(fasta, "fasta"))
