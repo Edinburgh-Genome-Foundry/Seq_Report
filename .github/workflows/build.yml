@@ -16,7 +16,6 @@ jobs:
         # Install dependencies for WeasyPrint (pdf_reports): https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#ubuntu-20-04
         run: |
           python -m pip install --upgrade pip
-          pango-view --version
           sudo apt-get -y install python3-cffi python3-brotli libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
           pango-view --version
           pip install pytest pytest-cov coveralls
