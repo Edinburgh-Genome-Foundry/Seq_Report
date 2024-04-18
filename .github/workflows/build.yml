@@ -24,9 +24,9 @@ jobs:
           pip install -e .
       - name: Test with pytest
         run: |
-          python -m pytest --cov seqreport --cov-report term-missing
-      - name: Coveralls
-        run: coveralls
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_SERVICE_NAME: github
+          python -m pytest --cov=seqreport
+      # - name: Coveralls
+      #   run: coveralls
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     COVERALLS_SERVICE_NAME: github
