@@ -17,7 +17,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           sudo apt-get -y install python3-cffi python3-brotli libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
-          pango-view --version
           pip install pytest pytest-cov coveralls
           pip install pypdf libsass
       - name: Test pip installation
