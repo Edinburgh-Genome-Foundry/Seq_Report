@@ -23,24 +23,24 @@ p.
 
 if seqcollection.too_short
   p.
-    Sequences shorter than <b>{{ seqcollection.min_length }}</b> bp: {{ seqcollection.too_short }}
+    #[span.red ☒] Sequences shorter than <b>{{ seqcollection.min_length }}</b> bp: {{ seqcollection.too_short }}
 else
   p.
-    None of the sequences are shorter than <b>{{ seqcollection.min_length }}</b> bp.
+    #[span.green ☑] None of the sequences are shorter than <b>{{ seqcollection.min_length }}</b> bp.
 
 if seqcollection.too_long
   p.
-    Sequences longer than <b>{{ seqcollection.max_length }}</b> bp: {{ seqcollection.too_long }}
+    #[span.red ☒] Sequences longer than <b>{{ seqcollection.max_length }}</b> bp: {{ seqcollection.too_long }}
 else
   p.
-    None of the sequences are longer than <b>{{ seqcollection.max_length }}</b> bp.
+    #[span.green ☑] None of the sequences are longer than <b>{{ seqcollection.max_length }}</b> bp.
 
 if seqcollection.long_names
   p.
-    Sequence IDs longer than <b>{{ seqcollection.name_length }}</b> characters: {{ seqcollection.long_names }}
+    #[span.red ☒] Sequence IDs longer than <b>{{ seqcollection.name_length }}</b> characters: {{ seqcollection.long_names }}
 else
   p.
-    None of the IDs are longer than <b>{{ seqcollection.name_length }}</b> characters.
+    #[span.green ☑] None of the IDs are longer than <b>{{ seqcollection.name_length }}</b> characters.
 
 if seqcollection.comments
   p.
