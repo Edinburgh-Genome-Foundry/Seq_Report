@@ -12,11 +12,17 @@ def test_SeqCollection():
         records=seq_records,
         projectname="EGF24",
         comments="This is a test sequence set.",
+        min_length=20,
+        max_length=40,
+        name_length=5,
     )
     assert seq_coll.n_seq == 3
-    assert seq_coll.n_bp == 99
+    assert seq_coll.n_bp == 84
     assert seq_coll.projectname == "EGF24"
-    assert seq_coll != ""
+    assert seq_coll.comments != ""
+    assert len(seq_coll.too_short) == 1
+    assert len(seq_coll.too_long) == 1
+    assert len(seq_coll.long_names) == 1
 
 
 def test_read_fasta():
