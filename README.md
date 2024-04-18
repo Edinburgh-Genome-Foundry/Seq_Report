@@ -4,8 +4,7 @@
 
 # Seq Report
 
-<!-- [![build](https://github.com/Edinburgh-Genome-Foundry/Seq_Report/actions/workflows/build.yml/badge.svg)](https://github.com/Edinburgh-Genome-Foundry/Seq_Report/actions/workflows/build.yml) -->
-
+[![build](https://github.com/Edinburgh-Genome-Foundry/Seq_Report/actions/workflows/build.yml/badge.svg)](https://github.com/Edinburgh-Genome-Foundry/Seq_Report/actions/workflows/build.yml)
 <!-- [![coverage](https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/Seq_Report/badge.svg?branch=main)](https://coveralls.io/github/Edinburgh-Genome-Foundry/Seq_Report?branch=main) -->
 
 Simple reporting on a set of sequences for documentation purposes.
