@@ -15,6 +15,8 @@ Simple reporting on a set of sequences for documentation purposes.
 pip install git+https://github.com/Edinburgh-Genome-Foundry/Seq_Report.git
 ```
 
+See also [build.yml](.github/workflows/build.yml) or [PDF Reports](https://github.com/Edinburgh-Genome-Foundry/pdf_reports) Installation instructions.
+
 ## Usage
 
 ```python
