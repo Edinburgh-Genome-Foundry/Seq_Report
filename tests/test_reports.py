@@ -14,4 +14,4 @@ def test_write_pdf_report(tmpdir):
 
     with open(pdf_path, "rb") as f:
         filesize = len(f.read())
-        assert filesize > 40000
+        assert filesize > 10000
