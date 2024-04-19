@@ -36,6 +36,9 @@ class SeqCollection:
     **name_length**
     > Check which sequence IDs are longer than this cutoff. Genbank has a character
     limit.
+
+    **assembly_plan**
+    > An optional assembly plan for calculating savings by re-using DNA parts.
     """
 
     def __init__(
@@ -49,6 +52,7 @@ class SeqCollection:
         min_length=100,  # a good cutoff for min DNA synthesis length
         max_length=3000,  # a good cutoff for max DNA synthesis length
         name_length=15,  # max seq record name length. Genbank character limit.
+        assembly_plan=""
     ):
         self.sequences = records
         self.cost_per_base = cost_per_base
@@ -59,6 +63,7 @@ class SeqCollection:
         self.min_length = min_length
         self.max_length = max_length
         self.name_length = name_length
+        self.assembly_plan = assembly_plan
         self.calculate_values()
 
     def calculate_values(self):
@@ -124,6 +129,27 @@ class SeqCollection:
             combined = " = ".join(identifier)
             reverse_complement_seq_text_list += [combined]
         self.reverse_complement_seq_text = " ; ".join(reverse_complement_seq_text_list)
+
+        # Savings section
+        if self.assembly_plan:
+            all_rows = []
+            with open(self.assembly_plan, "r") as f:
+                reader = csv.reader(f, skipinitialspace=True)
+                next(reader)  # ignore header
+                for row in reader:
+                    all_rows += row[1:]  # first column is construct name
+            self.savings_list = []
+            self.total_savings = 0
+            for record in self.sequences:
+                count_in_plan = all_rows.count(record.id)
+                if count_in_plan > 1:  # we count re-use savings only
+                    self.total_savings += len(record.seq) * (count_in_plan - 1)  # ignore first synthesis
+                    self.savings_list += [record.id]
+            self.total_cost_savings = self.total_savings * self.cost_per_base  # ignore cost / seq
+            # For the PDF report:
+            self.savings_list_text = " ; ".join(self.savings_list)
+        else:
+            self.savings_list_text = ""
 
 
 def read_fasta(fasta):

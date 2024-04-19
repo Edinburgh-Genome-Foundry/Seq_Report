@@ -63,6 +63,17 @@ else
   p.
     #[span.green ☑] None of the sequences are reverse complements.
 
+if seqcollection.assembly_plan
+
+  if seqcollection.savings_list_text
+    p.
+      Re-used sequences in the provided assembly plan: {{ seqcollection.savings_list_text }}.
+      Total savings: <b>{{ seqcollection.total_savings }}</b> bp or <b>{{ seqcollection.currency_symbol }} {{ seqcollection.total_cost_savings }}</b>.
+  else
+    p.
+      None of the sequences are used more than once in the provided assembly plan.
+
+
 if seqcollection.comments
   p.
     Comments: <i>{{ seqcollection.comments }}</i>
