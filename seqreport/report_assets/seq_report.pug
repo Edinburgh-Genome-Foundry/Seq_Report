@@ -21,26 +21,47 @@ p.
 p.
   Estimated cost: <b>{{ seqcollection.currency_symbol }} {{ seqcollection.cost }}</b>
 
-if seqcollection.too_short
+if seqcollection.too_short_text
   p.
-    #[span.red ☒] Sequences shorter than <b>{{ seqcollection.min_length }}</b> bp: {{ seqcollection.too_short }}
+    #[span.red ☒] Sequences shorter than <b>{{ seqcollection.min_length }}</b> bp: {{ seqcollection.too_short_text }}
 else
   p.
     #[span.green ☑] None of the sequences are shorter than <b>{{ seqcollection.min_length }}</b> bp.
 
-if seqcollection.too_long
+if seqcollection.too_long_text
   p.
-    #[span.red ☒] Sequences longer than <b>{{ seqcollection.max_length }}</b> bp: {{ seqcollection.too_long }}
+    #[span.red ☒] Sequences longer than <b>{{ seqcollection.max_length }}</b> bp: {{ seqcollection.too_long_text }}
 else
   p.
     #[span.green ☑] None of the sequences are longer than <b>{{ seqcollection.max_length }}</b> bp.
 
-if seqcollection.long_names
+if seqcollection.long_names_text
   p.
-    #[span.red ☒] Sequence IDs longer than <b>{{ seqcollection.name_length }}</b> characters: {{ seqcollection.long_names }}
+    #[span.red ☒] Sequence IDs longer than <b>{{ seqcollection.name_length }}</b> characters: {{ seqcollection.long_names_text }}
 else
   p.
     #[span.green ☑] None of the IDs are longer than <b>{{ seqcollection.name_length }}</b> characters.
+
+if seqcollection.repeat_names_text
+  p.
+    #[span.red ☒] Sequence IDs appearing more than once: {{ seqcollection.repeat_names_text }}
+else
+  p.
+    #[span.green ☑] None of the IDs are duplicated.
+
+if seqcollection.repeat_seq_text
+  p.
+    #[span.red ☒] Identical sequence-pairs: {{ seqcollection.repeat_seq_text }}
+else
+  p.
+    #[span.green ☑] None of the sequences are identical.
+
+if seqcollection.reverse_complement_seq_text
+  p.
+    #[span.red ☒] Sequence-pairs with identical reverse complements: {{ seqcollection.reverse_complement_seq_text }}
+else
+  p.
+    #[span.green ☑] None of the sequences are reverse complements.
 
 if seqcollection.comments
   p.

@@ -46,8 +46,8 @@ class SeqCollection:
         currency_symbol="£",
         projectname="",
         comments="",
-        min_length=0,
-        max_length=0,
+        min_length=100,  # a good cutoff for min DNA synthesis length
+        max_length=3000,  # a good cutoff for max DNA synthesis length
         name_length=15,  # max seq record name length. Genbank character limit.
     ):
         self.sequences = records
@@ -66,23 +66,64 @@ class SeqCollection:
         self.cost_per_seq = float(self.cost_per_seq)
         self.n_seq = len(self.sequences)
 
+        # Numbers section
         n_bp = 0
         for part in self.sequences:
             n_bp += len(part.seq)
         self.n_bp = n_bp
         self.cost = self.n_seq * self.cost_per_seq + self.n_bp * self.cost_per_base
 
+        # Lengths section
         self.too_short = []
         self.too_long = []
         self.long_names = []
         for record in self.sequences:
             if len(record) < self.min_length:
                 self.too_short += [record.id]
-            if self.max_length > 0:  # otherwise skip if default
-                if len(record) > self.max_length:
-                    self.too_long += [record.id]
+            if len(record) > self.max_length:
+                self.too_long += [record.id]
             if len(record.id) > self.name_length:
                 self.long_names += [record.id]
+
+        self.too_short = list(set(self.too_short))
+        self.too_long = list(set(self.too_long))
+        self.long_names = list(set(self.long_names))
+        # Repeats will be checked further below.
+
+        # For the PDF report:
+        self.too_short_text = " ; ".join(self.too_short)
+        self.too_long_text = " ; ".join(self.too_long)
+        self.long_names_text = " ; ".join(self.long_names)
+
+        # Repeats section
+        self.repeat_names = []
+        self.repeat_seq = []
+        self.reverse_complement_seq = []
+        for index, record in enumerate(self.sequences[:-1]):
+            for other_record in self.sequences[index+1:]:
+                if record.id == other_record.id:
+                    self.repeat_names += [record.id]
+                if record.seq == other_record.seq:
+                    self.repeat_seq += [(record.id, other_record.id)]
+                if record.seq == other_record.seq.reverse_complement():
+                    self.reverse_complement_seq += [(record.id, other_record.id)]
+                    
+        self.repeat_names = list(set(self.repeat_names))
+
+        # For the PDF report:
+        self.repeat_names_text = " ; ".join(self.repeat_names)
+
+        repeat_seq_text_list = []
+        for identifier in self.repeat_seq:
+            combined = " = ".join(identifier)
+            repeat_seq_text_list += [combined]
+        self.repeat_seq_text = " ; ".join(repeat_seq_text_list)
+
+        reverse_complement_seq_text_list = []
+        for identifier in self.reverse_complement_seq:
+            combined = " = ".join(identifier)
+            reverse_complement_seq_text_list += [combined]
+        self.reverse_complement_seq_text = " ; ".join(reverse_complement_seq_text_list)
 
 
 def read_fasta(fasta):

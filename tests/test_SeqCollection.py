@@ -14,20 +14,23 @@ def test_SeqCollection():
         comments="This is a test sequence set.",
         min_length=20,
         max_length=40,
-        name_length=5,
+        name_length=10,
     )
-    assert seq_coll.n_seq == 3
-    assert seq_coll.n_bp == 84
+    assert seq_coll.n_seq == 6
+    assert seq_coll.n_bp == 175
     assert seq_coll.projectname == "EGF24"
     assert seq_coll.comments != ""
     assert len(seq_coll.too_short) == 1
     assert len(seq_coll.too_long) == 1
     assert len(seq_coll.long_names) == 1
+    assert len(seq_coll.repeat_names) == 1
+    assert len(seq_coll.repeat_seq) == 1
+    assert len(seq_coll.reverse_complement_seq) == 2
 
 
 def test_read_fasta():
     seq_records = seqreport.read_fasta(seq_fasta)
-    assert len(seq_records) == 3
+    assert len(seq_records) == 6
 
 
 def test_seqcollection_from_csv():
