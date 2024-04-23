@@ -23,7 +23,7 @@ p.
 p.
   Number of basepairs: <b>{{ seqcollection.n_bp }}</b> bp
 p.
-  Estimated cost: <b>{{ seqcollection.currency_symbol }} {{ seqcollection.cost }}</b>
+  Estimated cost: <b>{{ seqcollection.currency_symbol }}{{ seqcollection.cost }}</b>
 
 if seqcollection.too_short_text
   p.
@@ -73,10 +73,14 @@ if seqcollection.assembly_plan
     p.
       Re-used sequences in the provided assembly plan: {{ seqcollection.savings_list_text }}.
     p.
-      Total savings: <b>{{ seqcollection.total_savings }}</b> bp or <b>{{ seqcollection.currency_symbol }} {{ seqcollection.total_cost_savings }}</b>.
+      Total savings: <b>{{ seqcollection.total_savings }}</b> bp or <b>{{ seqcollection.currency_symbol }}{{ seqcollection.total_cost_savings }}</b>.
   else
     p.
       None of the sequences are used more than once in the provided assembly plan.
+
+  if seqcollection.not_in_plan_text
+    p.
+      The following do not appear in the assembly plan: {{ seqcollection.not_in_plan_text }}.
 
 
 if seqcollection.comments
@@ -98,8 +102,8 @@ p.
 p.
   Parameters:
   <ul>
-    <li>Cost per base = <b>{{ seqcollection.currency_symbol }} {{ seqcollection.cost_per_base }}</b> </li>
-    <li>Cost per sequence = <b>{{ seqcollection.currency_symbol }} {{ seqcollection.cost_per_seq }}</b> </li>
+    <li>Cost per base = <b>{{ seqcollection.currency_symbol }}{{ seqcollection.cost_per_base }}</b> </li>
+    <li>Cost per sequence = <b>{{ seqcollection.currency_symbol }}{{ seqcollection.cost_per_seq }}</b> </li>
   </ul>
 
 

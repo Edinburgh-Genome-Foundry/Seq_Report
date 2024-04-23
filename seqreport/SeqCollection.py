@@ -139,6 +139,7 @@ class SeqCollection:
 
         # Savings section
         if self.assembly_plan:
+            self.not_in_plan = []
             all_rows = []
             with open(self.assembly_plan, "r") as f:
                 reader = csv.reader(f, skipinitialspace=True)
@@ -152,12 +153,17 @@ class SeqCollection:
                 if count_in_plan > 1:  # we count re-use savings only
                     self.total_savings += len(record.seq) * (count_in_plan - 1)  # ignore first synthesis
                     self.savings_list += [record.id]
+                # else we don't have any savings from the sequence.
+                if count_in_plan < 1:  # also find the ones not in the assembly plan
+                    self.not_in_plan += [record.id]
             self.total_cost_savings = self.total_savings * self.cost_per_base  # ignore cost / seq
             self.total_cost_savings = round(self.total_cost_savings)  # (in)accuracy is fine for our purposes
             # For the PDF report:
             self.savings_list_text = " ; ".join(self.savings_list)
+            self.not_in_plan_text = " ; ".join(self.savings_list)
         else:
             self.savings_list_text = ""
+            self.not_in_plan_text = ""
 
 
 def read_fasta(fasta):
