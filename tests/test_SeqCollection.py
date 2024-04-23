@@ -35,5 +35,6 @@ def test_read_fasta():
 
 def test_seqcollection_from_csv():
     csv_path = os.path.join(data_dir, "values.csv")
-    seqreport.seqcollection_from_csv(csv_file=csv_path)
+    seq_coll = seqreport.seqcollection_from_csv(csv_file=csv_path)
+    assert seq_coll.fasta_name == "test.fa"  # see in CSV file
     # (not tested passing records or param_dict above)

@@ -1,4 +1,5 @@
 import csv
+import os
 
 from Bio import SeqIO
 
@@ -35,10 +36,13 @@ class SeqCollection:
 
     **name_length**
     > Check which sequence IDs are longer than this cutoff. Genbank has a character
-    limit.
+    limit (`int`).
 
     **assembly_plan**
-    > An optional assembly plan for calculating savings by re-using DNA parts.
+    > Optional assembly plan CSV path for calculating savings by re-using DNA parts.
+
+    **fasta_name**
+    > Optional name of the fasta file for easy identification (`str`).
     """
 
     def __init__(
@@ -52,7 +56,8 @@ class SeqCollection:
         min_length=100,  # a good cutoff for min DNA synthesis length
         max_length=3000,  # a good cutoff for max DNA synthesis length
         name_length=15,  # max seq record name length. Genbank character limit.
-        assembly_plan=""
+        assembly_plan="",
+        fasta_name="",
     ):
         self.sequences = records
         self.cost_per_base = cost_per_base
@@ -64,6 +69,7 @@ class SeqCollection:
         self.max_length = max_length
         self.name_length = name_length
         self.assembly_plan = assembly_plan
+        self.fasta_name = fasta_name
         self.calculate_values()
 
     def calculate_values(self):
@@ -77,6 +83,7 @@ class SeqCollection:
             n_bp += len(part.seq)
         self.n_bp = n_bp
         self.cost = self.n_seq * self.cost_per_seq + self.n_bp * self.cost_per_base
+        self.cost = round(self.cost)  # (in)accuracy is fine for our purposes
 
         # Lengths section
         self.too_short = []
@@ -146,6 +153,7 @@ class SeqCollection:
                     self.total_savings += len(record.seq) * (count_in_plan - 1)  # ignore first synthesis
                     self.savings_list += [record.id]
             self.total_cost_savings = self.total_savings * self.cost_per_base  # ignore cost / seq
+            self.total_cost_savings = round(self.total_cost_savings)  # (in)accuracy is fine for our purposes
             # For the PDF report:
             self.savings_list_text = " ; ".join(self.savings_list)
         else:
@@ -170,7 +178,8 @@ def seqcollection_from_csv(csv_file, records=None, param_dict={}):
     The CSV file parameters override the default class parameters, and this function's
     parameters override the CSV file parameters. Either a FASTA file (in the CSV or in
     `param_dict`) or a list of `SeqRecords` must be specified.
-    For the parameter descriptions, see the docstring of `SeqCollection`.
+    For the parameter descriptions, see parameters in the docstring of `SeqCollection`,
+    except records and fasta_name.
     """
     with open(csv_file, "r") as f:
         reader = csv.reader(f, skipinitialspace=True)
@@ -192,5 +201,9 @@ def seqcollection_from_csv(csv_file, records=None, param_dict={}):
     seq_coll = SeqCollection(records=records)
     for key, value in parameters.items():
         setattr(seq_coll, key, value)
+
+    # To ensure that the correct filename is used:
+    setattr(seq_coll, "fasta_name", os.path.basename(parameters["fasta"]))
     seq_coll.calculate_values()
+
     return seq_coll

@@ -10,6 +10,10 @@ hr
 p.
   This document reports basic sequence statistics.
 
+if seqcollection.fasta_name
+  p.
+    FASTA: <b>{{ seqcollection.fasta_name }}</b>
+
 if seqcollection.projectname
   p.
     Projectname: <b>{{ seqcollection.projectname }}</b>
@@ -68,6 +72,7 @@ if seqcollection.assembly_plan
   if seqcollection.savings_list_text
     p.
       Re-used sequences in the provided assembly plan: {{ seqcollection.savings_list_text }}.
+    p.
       Total savings: <b>{{ seqcollection.total_savings }}</b> bp or <b>{{ seqcollection.currency_symbol }} {{ seqcollection.total_cost_savings }}</b>.
   else
     p.
