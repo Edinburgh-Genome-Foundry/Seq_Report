@@ -146,7 +146,7 @@ class SeqCollection:
                 next(reader)  # ignore header
                 for row in reader:
                     all_rows += row[1:]  # first column is construct name
-            self.savings_list = []
+            self.savings_dict = {}
             self.total_savings = 0
             for record in self.sequences:
                 count_in_plan = all_rows.count(record.id)
@@ -154,7 +154,7 @@ class SeqCollection:
                     self.total_savings += len(record.seq) * (
                         count_in_plan - 1
                     )  # ignore first synthesis
-                    self.savings_list += [record.id]
+                    self.savings_dict[record.id] = count_in_plan
                 # else we don't have any savings from the sequence.
                 if count_in_plan < 1:  # also find the ones not in the assembly plan
                     self.not_in_plan += [record.id]
@@ -165,10 +165,12 @@ class SeqCollection:
                 self.total_cost_savings
             )  # (in)accuracy is fine for our purposes
             # For the PDF report:
-            self.savings_list_text = " ; ".join(self.savings_list)
             self.not_in_plan_text = " ; ".join(self.not_in_plan)
+            self.savings_dict_text = " ; ".join(
+                [f"{key}  (×{value})" for key, value in self.savings_dict.items()]
+            )
         else:
-            self.savings_list_text = ""
+            self.savings_dict_text = ""
             self.not_in_plan_text = ""
 
 
