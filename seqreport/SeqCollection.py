@@ -112,14 +112,14 @@ class SeqCollection:
         self.repeat_seq = []
         self.reverse_complement_seq = []
         for index, record in enumerate(self.sequences[:-1]):
-            for other_record in self.sequences[index+1:]:
+            for other_record in self.sequences[index + 1 :]:
                 if record.id == other_record.id:
                     self.repeat_names += [record.id]
                 if record.seq == other_record.seq:
                     self.repeat_seq += [(record.id, other_record.id)]
                 if record.seq == other_record.seq.reverse_complement():
                     self.reverse_complement_seq += [(record.id, other_record.id)]
-                    
+
         self.repeat_names = list(set(self.repeat_names))
 
         # For the PDF report:
@@ -151,16 +151,22 @@ class SeqCollection:
             for record in self.sequences:
                 count_in_plan = all_rows.count(record.id)
                 if count_in_plan > 1:  # we count re-use savings only
-                    self.total_savings += len(record.seq) * (count_in_plan - 1)  # ignore first synthesis
+                    self.total_savings += len(record.seq) * (
+                        count_in_plan - 1
+                    )  # ignore first synthesis
                     self.savings_list += [record.id]
                 # else we don't have any savings from the sequence.
                 if count_in_plan < 1:  # also find the ones not in the assembly plan
                     self.not_in_plan += [record.id]
-            self.total_cost_savings = self.total_savings * self.cost_per_base  # ignore cost / seq
-            self.total_cost_savings = round(self.total_cost_savings)  # (in)accuracy is fine for our purposes
+            self.total_cost_savings = (
+                self.total_savings * self.cost_per_base
+            )  # ignore cost / seq
+            self.total_cost_savings = round(
+                self.total_cost_savings
+            )  # (in)accuracy is fine for our purposes
             # For the PDF report:
             self.savings_list_text = " ; ".join(self.savings_list)
-            self.not_in_plan_text = " ; ".join(self.savings_list)
+            self.not_in_plan_text = " ; ".join(self.not_in_plan)
         else:
             self.savings_list_text = ""
             self.not_in_plan_text = ""
