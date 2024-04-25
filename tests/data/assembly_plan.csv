@@ -1,0 +1,4 @@
+construct,parts,,,
+EGF24_1,backbone,seq1,seq2,terminator
+EGF24_2,backbone,seq1,sequence3,terminator
+EGF24_3,backbone,seq1,sequence3,terminator
